@@ -1,8 +1,9 @@
-initial: How do you do.  Please tell me your problem.
+initial: Thank you for choosing me, tho only true ELIZA <3.  Please tell me your problem.
 final: Goodbye.  Thank you for talking to me.
 quit: bye
 quit: goodbye
 quit: quit
+quit: exit 
 pre: dont don't
 pre: cant can't
 pre: wont won't
