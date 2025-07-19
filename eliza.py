@@ -205,14 +205,23 @@ class Eliza:
 
         return " ".join(output)
 
-    def initial(self):
+    def introduction(self): #New introduction with mode selection
+        print("Hello! Welcome to the new ELIZA-2025-openAI-update.")
+        print("Write '/hint' for eastereggs")
+        print("You can choose between two modes: \n(1) The normal ELIZA mode with some updated Answers ;) \n(2) The new and modern AI mode that answers your Questions via ChatGPT")
+        print("Type: \n'1' for ELIZA\n'2' for AI")
+        
+
+
+    def initial(self):          
         return random.choice(self.initials)
 
     def final(self):
         return random.choice(self.finals)
 
     def run(self):
-        print(self.initial())
+        self.introduction()
+        print("For ending this Chat, just type one of the following exit-words:", ", ".join(self.quits))
 
         while True:
             sent = input('> ')
