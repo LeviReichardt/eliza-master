@@ -1,19 +1,20 @@
 import logging
 import random
 import re
+from collections import namedtuple
+
 import os
 import openai
-from collections import namedtuple
 from dotenv import load_dotenv
 
 
-# Fix Python2/Python3 incompatibility
+# Fix Python2/Python3 incompatibility (from default Eliza project)
 try: input = raw_inputby
 except NameError: pass
 
 log = logging.getLogger(__name__)
 
-
+mode = "ELIZA"  # Default mode for the chatbot
 
 
 class Key:
@@ -211,13 +212,37 @@ class Eliza:
 
         return " ".join(output)
 
-    def introduction(self): #New introduction with mode selection
+    def introduction(self):                 # New introduction with mode selection text
         print("Hello! Welcome to the new ELIZA-2025-openAI-update.")
         print("Write '/hint' for eastereggs")
         print("You can choose between two modes: \n(1) The normal ELIZA mode with some updated Answers ;) \n(2) The new and modern AI mode that answers your Questions via ChatGPT")
         print("Type: \n'1' for ELIZA\n'2' for AI")
        
-        
+    def select_mode(self):                  # Selects the mode of the answering chatbot
+        global mode
+        choice = input("> ")
+        print("For ending this Chat, just type one of the following exit-words:", ", ".join(self.quits))   # explain the exit options
+        if choice == "1":
+            mode = "ELIZA"
+            print('You choose ELIZA')
+            self.initial()                  #ELIZA intro
+        elif choice == "2":
+            mode = "GPT"
+            print('You choose GPT')
+        else:                               # Failsafe
+            print("Well, you were supposted to write '1' or '2'........ Now i'll choose ELIZA for you ^^")
+
+    def ask_openai(self, prompt, model="gpt-3.5-turbo"):  # send the chat to openAI
+        response = openai.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": "You are a friendly Chatbot."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=500
+        )
+        return response.choices[0].message.content.strip()
 
 
     def initial(self):          
@@ -227,29 +252,32 @@ class Eliza:
         return random.choice(self.finals)
 
     def run(self):
-        load_dotenv()    # load .env  (you have to paste the 'OPENAI_API_KEY=xyz' here) .env is in the -gitignore to not leak it on Github ;)
+        load_dotenv()                       # load .env  (you have to paste the 'OPENAI_API_KEY=xyz' here) .env is in the -gitignore to not leak it on Github ;)
         api_key = os.getenv("OPENAI_API_KEY")
-        openai.api_key = api_key
+        openai.api_key = api_key            #set the api key
 
-        self.introduction()
-        print("For ending this Chat, just type one of the following exit-words:", ", ".join(self.quits))
+        self.introduction()                 # write the introduction
+        self.select_mode()                  # choose the mode 
 
-        while True:
-            sent = input('> ')
-
-            output = self.respond(sent)
-            if output is None:
+        while True:                                     # loop for running the program
+            user_input = input("> ")
+            if user_input.lower() in self.quits:        # always possible to quit the program
                 break
+            if mode == "ELIZA":
+                response = self.respond(user_input)    # ELIZA logic
+                print(response)
+            else:
+                response = self.ask_openai(user_input)  # ChatGPT logic
+                print("BOT:", response)
 
-            print(output)
-
-        print(self.final())
+        print(self.final())                             # final text from ELIZA
 
 
 def main():
     eliza = Eliza()
     eliza.load('doctor.txt')
     eliza.run()
+        
 
 if __name__ == '__main__':
     logging.basicConfig()
