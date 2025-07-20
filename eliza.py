@@ -216,10 +216,7 @@ class Eliza:
         print("Write '/hint' for eastereggs")
         print("You can choose between two modes: \n(1) The normal ELIZA mode with some updated Answers ;) \n(2) The new and modern AI mode that answers your Questions via ChatGPT")
         print("Type: \n'1' for ELIZA\n'2' for AI")
-        # .env Datei laden
-        load_dotenv()   
-        api_key = os.getenv("OPENAI_API_KEY")
-        openai.api_key = api_key
+       
         
 
 
@@ -230,6 +227,10 @@ class Eliza:
         return random.choice(self.finals)
 
     def run(self):
+        load_dotenv()    # load .env  (you have to paste the 'OPENAI_API_KEY=xyz' here) .env is in the -gitignore to not leak it on Github ;)
+        api_key = os.getenv("OPENAI_API_KEY")
+        openai.api_key = api_key
+
         self.introduction()
         print("For ending this Chat, just type one of the following exit-words:", ", ".join(self.quits))
 
