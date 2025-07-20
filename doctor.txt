@@ -1,5 +1,5 @@
 initial: Thank you for choosing me, tho only true ELIZA <3.  Please tell me your problem.
-final: Goodbye.  Thank you for talking to me.
+final: Goodbye Prof. Wimmer.  Thank you for talking to me today.
 quit: bye
 quit: goodbye
 quit: quit
@@ -37,6 +37,7 @@ synon: happy elated glad better
 synon: cannot can't
 synon: everyone everybody nobody noone
 synon: be am is are was
+synon: hello hi hey
 key: xnone
   decomp: *
     reasmb: I'm not sure I understand you fully.
