@@ -1,13 +1,19 @@
 import logging
 import random
 import re
+import os
+import openai
 from collections import namedtuple
+from dotenv import load_dotenv
+
 
 # Fix Python2/Python3 incompatibility
-try: input = raw_input
+try: input = raw_inputby
 except NameError: pass
 
 log = logging.getLogger(__name__)
+
+
 
 
 class Key:
@@ -210,6 +216,10 @@ class Eliza:
         print("Write '/hint' for eastereggs")
         print("You can choose between two modes: \n(1) The normal ELIZA mode with some updated Answers ;) \n(2) The new and modern AI mode that answers your Questions via ChatGPT")
         print("Type: \n'1' for ELIZA\n'2' for AI")
+        # .env Datei laden
+        load_dotenv()   
+        api_key = os.getenv("OPENAI_API_KEY")
+        openai.api_key = api_key
         
 
 
