@@ -225,7 +225,7 @@ class Eliza:
         if choice == "1":
             mode = "ELIZA"
             print('You choose ELIZA')
-            self.initial()                  #ELIZA intro
+            print(self.initial())                  #ELIZA intro
         elif choice == "2":
             mode = "GPT"
             print('You choose GPT')
