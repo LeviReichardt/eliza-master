@@ -1,5 +1,7 @@
 initial: Thank you for choosing me, tho only true ELIZA <3.  Please tell me your problem.
 final: Goodbye Prof. Wimmer.  Thank you for talking to me today.
+easteregg: You should try asking about these keywords; ...
+hint: hint
 quit: bye
 quit: goodbye
 quit: quit

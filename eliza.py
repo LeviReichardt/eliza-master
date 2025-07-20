@@ -42,6 +42,8 @@ class Eliza:
         self.synons = {}
         self.keys = {}
         self.memory = []
+        self.hints = []
+        self.eastereggs = []
 
     def load(self, path):
         key = None
@@ -55,6 +57,10 @@ class Eliza:
                     self.initials.append(content)
                 elif tag == 'final':
                     self.finals.append(content)
+                elif tag == 'hint':
+                    self.hints.append(content)
+                elif tag == 'easteregg':
+                    self.eastereggs.append(content)
                 elif tag == 'quit':
                     self.quits.append(content)
                 elif tag == 'pre':
@@ -178,6 +184,8 @@ class Eliza:
     def respond(self, text):
         if text.lower() in self.quits:
             return None
+        if text.lower() in self.hints:
+            return None
 
         text = re.sub(r'\s*\.+\s*', ' . ', text)
         text = re.sub(r'\s*,+\s*', ' , ', text)
@@ -214,7 +222,7 @@ class Eliza:
 
     def introduction(self):                 # New introduction with mode selection text
         print("Hello! Welcome to the new ELIZA-2025-openAI-update.")
-        print("Write '/hint' for eastereggs")
+        print("Write 'hint' for eastereggs")
         print("You can choose between two modes: \n(1) The normal ELIZA mode with some updated Answers ;) \n(2) The new and modern AI mode that answers your Questions via ChatGPT")
         print("Type: \n'1' for ELIZA\n'2' for AI")
        
@@ -263,6 +271,8 @@ class Eliza:
             user_input = input("> ")
             if user_input.lower() in self.quits:        # always possible to quit the program
                 break
+            if user_input in self.hints:
+                print(random.choice(self.eastereggs))                     #TODO: hint text in doctor
             if mode == "ELIZA":
                 response = self.respond(user_input)    # ELIZA logic
                 print(response)
