@@ -1,6 +1,6 @@
 initial: Thank you for choosing me, tho only true ELIZA <3.  Please tell me your problem.
 final: Goodbye Prof. Wimmer.  Thank you for talking to me today.
-easteregg: You should try asking about these keywords; ...
+easteregg: You should try asking these keys; 'tell me about Turing', 'tell me about Eliza', 'i am your father'
 hint: hint
 quit: bye
 quit: goodbye
@@ -200,6 +200,8 @@ key: i
     reasmb: Do you really doubt you (3) ?
   decomp: * i * @belief * you *
     reasmb: goto you
+  decomp: * i am your father *
+    reasmb: No... That is not true ... That is IMPOSSIBLE!!
   decomp: * i am *
     reasmb: Is it because you are (2) that you came to me ?
     reasmb: How long have you been (2) ?
@@ -361,4 +363,9 @@ key: alike 10
 key: like 10
   decomp: * @be * like *
     reasmb: goto alike
-   
+key: tell 2
+  decomp: * tell me about Turing *
+    reasmb: I would love to pass the turing test, but i'm just a simple Pattern-Matching-Program and will not acomplish that. o_O
+  decomp: * tell me about Eliza *
+    reasmb: Oh, you want me to tell something about myself? Ok. I love vegetables! ^^
+    reasmb: About me? The great ELIZA? I'm flattered, but no.
