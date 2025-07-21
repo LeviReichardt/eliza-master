@@ -233,7 +233,7 @@ class Eliza:
         if choice == "1":
             mode = "ELIZA"
             print('You choose ELIZA')
-            print(self.initial())                  #ELIZA intro
+            print(self.initial())           #ELIZA intro
         elif choice == "2":
             mode = "GPT"
             print('You choose GPT')
@@ -271,8 +271,8 @@ class Eliza:
             user_input = input("> ")
             if user_input.lower() in self.quits:        # always possible to quit the program
                 break
-            if user_input in self.hints:
-                print(random.choice(self.eastereggs))                     #TODO: hint text in doctor
+            if user_input.lower() in self.hints:
+                print(random.choice(self.eastereggs))                     # always possible to access hint text from doctor file
             if mode == "ELIZA":
                 response = self.respond(user_input)    # ELIZA logic
                 print(response)
